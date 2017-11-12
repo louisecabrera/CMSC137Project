@@ -12,6 +12,8 @@ import javax.swing.Timer;
 public class Pacman extends JPanel implements ActionListener, KeyListener {
     Timer t = new Timer(5, this);
     int x = 0, y = 0;
+    public int hp;
+    public int bullets;
     public int xPos;
     public int yPos;
     public int foodEaten;
@@ -20,6 +22,8 @@ public class Pacman extends JPanel implements ActionListener, KeyListener {
 
     public Pacman(int xPos, int yPos) {
         t.start();
+        this.hp = 5;
+        this.bullets = 0;
         this.xPos = xPos;
         this.yPos = yPos;
         this.foodEaten = 0;
@@ -31,6 +35,14 @@ public class Pacman extends JPanel implements ActionListener, KeyListener {
         setFocusTraversalKeysEnabled(false);
     }
 
+    public void shootNormalBullet(){//-1 HP to victim
+      
+    }
+
+    public void shootLaser(){//-2 HP to victim
+     
+    }
+    
     public void wakeUp(){ 
         this.alive = true;
     }
