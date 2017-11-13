@@ -15,9 +15,7 @@ public class Connection {
 		try {
 			in = new DataInputStream(new BufferedInputStream(client.getInputStream()));
 			out = new DataOutputStream(new BufferedOutputStream(client.getOutputStream()));
-		} catch(IOException e) {
-			// e.printStackTrace();
-		}
+		} catch(IOException e) { }
 
 		alive = true;
 	}
@@ -26,9 +24,7 @@ public class Connection {
 	public String read() {
 		try {
 			return in.readUTF();
-		} catch(IOException e) {
-			// e.printStackTrace();
-		}
+		} catch(IOException e) { }
 
 		return null;
 	}
@@ -37,18 +33,14 @@ public class Connection {
 	public void write(String message) {
 		try {
 			out.writeUTF(message);
-		} catch(IOException e) {
-			// e.printStackTrace();
-		}
+		} catch(IOException e) { }
 	}
 
 	// clears output stream
 	public void flush() {
 		try {
 			out.flush();
-		} catch(IOException e) {
-			// e.printStackTrace();
-		}
+		} catch(IOException e) { }
 	}
 
 	// closes connections
@@ -61,7 +53,6 @@ public class Connection {
 			client.close();
 			alive = false;
 		} catch(IOException e) {
-			// e.printStackTrace();
 			temp = false;
 		} 
 

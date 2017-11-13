@@ -8,10 +8,12 @@ public class Client implements Runnable {
 	private boolean alive;
 	private List<Client> clients;
 	private Thread t;
+	private String clientName;
 
 	public Client(Connection connection, List<Client> clients) {
 		this.connection = connection;
 		this.clients = clients;
+		clientName = null;
 		alive = false;
 	}
 
@@ -40,9 +42,7 @@ public class Client implements Runnable {
 			} else {
 				try {
 					Thread.sleep(10);
-				} catch(InterruptedException e) {
-					// e.printStackTrace();
-				}
+				} catch(InterruptedException e) { }
 			}
 		}
 	}
@@ -59,19 +59,24 @@ public class Client implements Runnable {
 
 	// closes client connection
 	public synchronized void closeSession() {
-		
+		int i = 0;
+		for(Client c : clients){	//removes client from list of clients
+			if(c == this){
+				clients.remove(i);
+				break;
+			}
+			i++;
+		}
+
 		if(!alive)
 			return;
 
 		alive = false;
-		
+
 		try {
-			System.out.println("Client closed.");
 			connection.close();
 			t.join();
-		} catch(InterruptedException e) {
-			// e.printStackTrace();
-		}
+		} catch(InterruptedException e) { }
 	}
 
 	// sends client/server input to output stream for reading
@@ -97,9 +102,7 @@ public class Client implements Runnable {
 					while((msg = in.readUTF()) != null) {
 						System.out.println(msg);
 					}
-				} catch(Exception e) {
-					// e.printStackTrace();
-				}
+				} catch(Exception e) { }
 			});
 			input.start();
 
@@ -113,6 +116,7 @@ public class Client implements Runnable {
 				while((msg = In.readLine()) != null) {
 					
 					if(msg.equals("/q")){
+						out.writeUTF(userName + " has disconnected.");
 						break;
 					}
 					else{
@@ -121,12 +125,8 @@ public class Client implements Runnable {
 					}
 					
 				}
-			} catch(Exception e) {
-				// e.printStackTrace();
-			}
+			} catch(Exception e) { }
 
-		} catch(IOException e) {
-			// e.printStackTrace();
-		}
+		} catch(IOException e) { }
 	}
 }

@@ -5,15 +5,13 @@ import java.util.*;
 public class Server {
 
 	private ServerSocket serverSocket;
-	private List<Client> clients = new ArrayList<Client>();
+	public List<Client> clients = new ArrayList<Client>();
 	private ConnectionListener connectionListener;
 
 	public Server(int port) {
 		try {
 			serverSocket = new ServerSocket(port);
-		} catch(IOException e) {
-			// e.printStackTrace();
-		}
+		} catch(IOException e) { }
 
 		connectionListener = new ConnectionListener(this);
 	}

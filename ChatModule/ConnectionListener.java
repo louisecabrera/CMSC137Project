@@ -15,6 +15,7 @@ public class ConnectionListener implements Runnable {
 		running = false;
 	}
 
+	// Thread that adds new connections to the server
 	public void run() {
 		System.out.println("Server open at " + serverSocket.getLocalPort());
 
@@ -24,9 +25,7 @@ public class ConnectionListener implements Runnable {
 				Connection connection = new Connection(s);
 				server.addConnection(connection);
 			}
-		} catch(IOException e) {
-			// e.printStackTrace();
-		}
+		} catch(IOException e) { }
 	}
 
 	// starts listener to be able to accept new connections
@@ -48,15 +47,11 @@ public class ConnectionListener implements Runnable {
 
 		try {
 			serverSocket.close();
-		} catch(IOException e) {
-			// e.printStackTrace();
-		}	
+		} catch(IOException e) { }	
 
 		try {
 			t.join();
-		} catch(InterruptedException e) {
-			// e.printStackTrace();
-		}
+		} catch(InterruptedException e) { }
 	}
 
 	public boolean isAlive() {
