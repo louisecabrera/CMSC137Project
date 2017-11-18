@@ -29,55 +29,14 @@ public class Map implements Painter {
 			this.bg = ImageIO.read(new File("images/bgtile.png"));
 			this.pac = ImageIO.read(new File("images/pmtile.png"));
 		} catch(Exception e){ }
-		// this.setVisible(true);
-		// this.setPreferredSize(new Dimension(700,700));
-		// this.setOpaque(false);
-		// this.setBounds(0,0,700,700);
+		readMap();
 	}
 
-	// public void paintComponent(Graphics g){
-	// 	try{
-	// 		BufferedReader reader = new BufferedReader(new FileReader("maps/map1.txt"));
-	// 		int mapWidth = Integer.parseInt(reader.readLine());
-	// 		int mapHeight = Integer.parseInt(reader.readLine());
-
-	// 		mapArray = new int[mapHeight][mapWidth];
-
-	// 		// populate 2d array with values from file
-	// 		for(int row=0; row<mapHeight; row++){
-	// 			String line = reader.readLine();
-	// 			String[] tokens = line.split(" ");
-
-	// 			for(int col=0; col<mapWidth; col++){
-	// 				mapArray[row][col] = Integer.parseInt(tokens[col]);
-
-	// 				switch(mapArray[row][col]){
-	// 					case 0:
-	// 						g.drawImage(bg, col*this.tileSize, row*this.tileSize, null);
-	// 						break;
-	// 					case 1:
-	// 						g.drawImage(wall, col*this.tileSize, row*this.tileSize, null);
-
-	// 						// makes new barrier
-	// 						Barrier b = new Barrier(row,col,this.tileSize,this.tileSize);
-	// 						// stores all found barriers to list
-	// 						barriers.add(b);
-	// 						break;
-	// 				}
-	// 			}
-	// 		}
-
-	// 		for(int i=0; i<barriers.size(); i++){
-	// 			System.out.println("Barrier: " + barriers.get(i).getX() + ", " + barriers.get(i).getY());
-	// 		}
-	// 	} catch(Exception e){ e.printStackTrace(); }
-	// }
-
-	public void paint(Graphics2D g, Object thePanel, int width, int height){
+	public void readMap(){
 		try{
-			BufferedReader reader = new BufferedReader(new FileReader("maps/map1.txt"));
-			int mapWidth = Integer.parseInt(reader.readLine());
-			int mapHeight = Integer.parseInt(reader.readLine());
+			BufferedReader reader = new BufferedReader(new FileReader("maps/input.txt"));
+			this.mapWidth = Integer.parseInt(reader.readLine());
+			this.mapHeight = Integer.parseInt(reader.readLine());
 
 			mapArray = new int[mapHeight][mapWidth];
 
@@ -90,14 +49,9 @@ public class Map implements Painter {
 					mapArray[row][col] = Integer.parseInt(tokens[col]);
 
 					switch(mapArray[row][col]){
-						case 0:
-							g.drawImage(bg, col*this.tileSize, row*this.tileSize, null);
-							break;
 						case 1:
-							g.drawImage(wall, col*this.tileSize, row*this.tileSize, null);
-
 							// makes new barrier
-							Barrier b = new Barrier(row,col,this.tileSize,this.tileSize);
+							Barrier b = new Barrier(col*this.tileSize,row*this.tileSize,this.tileSize,this.tileSize);
 							// stores all found barriers to list
 							barriers.add(b);
 							break;
@@ -105,10 +59,27 @@ public class Map implements Painter {
 				}
 			}
 
-			for(int i=0; i<barriers.size(); i++){
-				System.out.println("Barrier: " + barriers.get(i).getX() + ", " + barriers.get(i).getY());
-			}
+			// System.out.println("BARRIER SIZE:" + barriers.size());
+			// for(int i=0; i<barriers.size(); i++){
+			// 	System.out.println("Barrier: " + barriers.get(i).getX() + ", " + barriers.get(i).getY());
+			// }
 		} catch(Exception e){ e.printStackTrace(); }
+	}
+
+	public void paint(Graphics2D g, Object thePanel, int width, int height){
+		
+		for(int row=0; row<mapHeight; row++){
+			for(int col=0; col<mapWidth; col++){
+				switch(mapArray[row][col]){
+					case 0:
+						g.drawImage(bg, col*this.tileSize, row*this.tileSize, null);
+						break;
+					case 1:
+						g.drawImage(wall, col*this.tileSize, row*this.tileSize, null);
+						break;
+				}
+			}
+		}
 	}
 
 	public List<Barrier> getBarriers(){

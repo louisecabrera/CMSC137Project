@@ -36,16 +36,20 @@ public class PacmanFrame extends JFrame{
 		centerPanel.setPreferredSize(new Dimension(height,height));
 		centerPanel.setBackground(Color.BLACK);
 		GamePanel game = new GamePanel();
+		Thread gp = new Thread(game);
 		centerPanel.add(game);
 
-		this.add(northPanel, BorderLayout.NORTH);
-		this.add(eastPanel, BorderLayout.EAST);
-		this.add(westPanel, BorderLayout.WEST);
+		// this.add(northPanel, BorderLayout.NORTH);
+		// this.add(eastPanel, BorderLayout.EAST);
+		// this.add(westPanel, BorderLayout.WEST);
 		this.add(centerPanel, BorderLayout.CENTER);
 
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);
+
+		gp.start();
+		try{ gp.join(); } catch(Exception e){ }
 	}
 }

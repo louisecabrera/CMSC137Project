@@ -15,24 +15,26 @@ import java.io.File;
 
 import java.util.*;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements Runnable {
 	
 	Image pac;
 	Map map = new Map();
 	List<Painter> layerPainters;
+	Pacman p;
+	boolean init = true;
+	List<Barrier> barriers = map.getBarriers();
 
 	public GamePanel(){
 		layerPainters = new ArrayList<Painter>();
 
 		// this.setBackground(Color.BLACK);
-		this.setPreferredSize(new Dimension(700,700));
-
-		Map map = new Map();
+		this.setPreferredSize(new Dimension(1290,720));
 		layerPainters.add(map);
 
-		Pacman p = new Pacman(30,30);
+		p = new Pacman(30,30);
 		layerPainters.add(p);
 
+		this.add(p);
 		this.setVisible(true);
 	}
 
@@ -40,7 +42,21 @@ public class GamePanel extends JPanel {
 		Graphics2D g2d = (Graphics2D)g;
 
 		for(Painter painter : layerPainters){
-			painter.paint(g2d, this, 700,700);
+			painter.paint(g2d, this, 1290,720);
+		}
+	}
+
+	public void run(){
+		while(true){
+			// for(int i=0; i<barriers.size(); i++){
+			// 	System.out.println(p.getBounds());
+			// 	if(p.checkCollision(barriers.get(i).getBounds())){
+			// 		// System.out.println("Collision w/ Barrier: " + barriers.get(i).getX() + ", " + barriers.get(i).getY());
+			// 		p.stopMoving();
+			// 	}
+			// }
+			this.repaint();
+			try{ Thread.sleep(10); } catch(Exception e){ }
 		}
 	}
 }
