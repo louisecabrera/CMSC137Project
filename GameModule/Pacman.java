@@ -38,11 +38,13 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
 
     int direction;
     int prevDirection;
+    int advancedKey;
     final int LEFT = 1;
     final int RIGHT = 2;
     final int UP = 3;
     final int DOWN = 4;
     final int STOP = 0;
+    boolean newKeyPress = false;
 
     public Pacman(int xPos, int yPos){
         this.hp = 5;
@@ -56,6 +58,7 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
 
         this.direction = STOP;
         this.prevDirection = STOP;
+        this.advancedKey = STOP;
 
         t.start();
         try{
@@ -93,20 +96,42 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
     }
 
     public void actionPerformed(ActionEvent e){
+        boolean isAdvance = false;
         for(int i=0; i<barriers.size(); i++){
             if(this.checkCollision(barriers.get(i).getBounds())){
                 //System.out.println(this.getBounds());
                 //System.out.println("Collision w/ Barrier: " + barriers.get(i).getX() + ", " + barriers.get(i).getY());
-                this.direction = this.prevDirection;
-                this.setDirection(this.direction);
+                if(newKeyPress){
+                    this.advancedKey = this.direction;
+                    this.direction = this.prevDirection;
+                    this.setDirection(this.direction);
+                }
                 break;
             }
         }
+
+        int temp = this.direction;
+        if(advancedKey!=STOP){  
+            this.direction = this.advancedKey;
+            for(int i=0; i<barriers.size(); i++){
+                if(this.checkCollision(barriers.get(i).getBounds())){
+                    isAdvance = true;
+                }
+            }
+
+            if(isAdvance) this.direction = temp;
+            else{
+                this.setDirection(this.direction);
+                this.advancedKey = STOP;
+            }
+        }
+
         for(int i=0; i<barriers.size(); i++){
             if(this.checkCollision(barriers.get(i).getBounds())){
-                System.out.println(this.getBounds());
+                //System.out.println(this.getBounds());
                 //System.out.println("Collision w/ Barrier: " + barriers.get(i).getX() + ", " + barriers.get(i).getY());
                 this.stopMoving();
+                System.out.println("four");
             }
         }
 
@@ -138,6 +163,7 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
             this.xPos += dx;
             this.yPos += dy;
         }
+        newKeyPress = false;
         this.prevDirection = this.direction;
     }
 
@@ -172,6 +198,7 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
                 dy = 0;
             }
         }
+        newKeyPress = true;
     }
 
     public void keyReleased(KeyEvent e){}
