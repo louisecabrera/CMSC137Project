@@ -35,6 +35,7 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
 
     Map map = new Map();
     List<Barrier> barriers = map.getBarriers();
+    List<Food> foods = map.getFoods();
 
     int direction;
     int prevDirection;
@@ -95,7 +96,21 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
         }
     }
 
+    private void eat(){
+        this.foodEaten += 1;
+    }
+
     public void actionPerformed(ActionEvent e){
+        System.out.println("Food: " + foodEaten);
+        for(int i=0; i<foods.size(); i++){
+            if(this.checkCollision(foods.get(i).getBounds())){
+                this.eat();
+                foods.get(i).eaten();
+                foods.remove(i);
+                break;
+            }
+        }
+
         boolean isAdvance = false;
         for(int i=0; i<barriers.size(); i++){
             if(this.checkCollision(barriers.get(i).getBounds())){
@@ -131,7 +146,6 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
                 //System.out.println(this.getBounds());
                 //System.out.println("Collision w/ Barrier: " + barriers.get(i).getX() + ", " + barriers.get(i).getY());
                 this.stopMoving();
-                System.out.println("four");
             }
         }
 
@@ -223,8 +237,8 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
         return new Rectangle(this.xPos+x, this.yPos+y, 30, 30);
     }
 
-    public boolean checkCollision(Rectangle barrier){
-        return this.getBounds().intersects(barrier);
+    public boolean checkCollision(Rectangle entity){
+        return this.getBounds().intersects(entity);
     }
 
     public void stopMoving(){

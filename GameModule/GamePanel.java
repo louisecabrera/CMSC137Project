@@ -23,6 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
 	Pacman p;
 	boolean init = true;
 	List<Barrier> barriers = map.getBarriers();
+	List<Food> foods = map.getFoods();
 
 	public GamePanel(){
 		layerPainters = new ArrayList<Painter>();

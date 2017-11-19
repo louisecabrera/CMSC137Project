@@ -21,13 +21,15 @@ public class Map implements Painter {
 	int mapArray[][];
 	private int mapWidth, mapHeight;
 	private List<Barrier> barriers = new ArrayList<Barrier>();
-	private Image wall, bg, pac;
+	private List<Food> foods = new ArrayList<Food>();
+	private Image wall, bg, pac, food;
 
 	public Map(){
 		try {
 			this.wall = ImageIO.read(new File("images/wall.png"));
 			this.bg = ImageIO.read(new File("images/bgtile.png"));
 			this.pac = ImageIO.read(new File("images/pmtile.png"));
+			this.food = ImageIO.read(new File("images/food.png"));
 		} catch(Exception e){ }
 		readMap();
 	}
@@ -49,12 +51,17 @@ public class Map implements Painter {
 					mapArray[row][col] = Integer.parseInt(tokens[col]);
 
 					switch(mapArray[row][col]){
+						case 0:
+							Food f = new Food(col*this.tileSize+10,row*this.tileSize+10,10,10);
+							foods.add(f);
+							break;
 						case 1:
 							// makes new barrier
 							Barrier b = new Barrier(col*this.tileSize,row*this.tileSize,this.tileSize,this.tileSize);
 							// stores all found barriers to list
 							barriers.add(b);
 							break;
+
 					}
 				}
 			}
@@ -73,6 +80,7 @@ public class Map implements Painter {
 				switch(mapArray[row][col]){
 					case 0:
 						g.drawImage(bg, col*this.tileSize, row*this.tileSize, null);
+						g.drawImage(food, col*this.tileSize+10, row*this.tileSize+10, null);
 						break;
 					case 1:
 						g.drawImage(wall, col*this.tileSize, row*this.tileSize, null);
@@ -84,5 +92,9 @@ public class Map implements Painter {
 
 	public List<Barrier> getBarriers(){
 		return this.barriers;
+	}
+
+	public List<Food> getFoods(){
+		return this.foods;
 	}
 }
