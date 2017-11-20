@@ -15,7 +15,7 @@ import java.io.File;
 
 import java.util.*;
 
-public class GamePanel extends JPanel implements Runnable {
+public class GamePanel extends JPanel implements Runnable{
 	
 	Image pac;
 	Map map = new Map();
@@ -23,7 +23,6 @@ public class GamePanel extends JPanel implements Runnable {
 	Pacman p;
 	boolean init = true;
 	List<Barrier> barriers = map.getBarriers();
-	List<Food> foods = map.getFoods();
 
 	public GamePanel(){
 		layerPainters = new ArrayList<Painter>();
@@ -56,6 +55,24 @@ public class GamePanel extends JPanel implements Runnable {
 			// 		p.stopMoving();
 			// 	}
 			// }
+
+			for(int i=0; i<map.foods.size(); i++){
+				System.out.println("Food Eaten: "+p.getFoodEaten());
+
+				if(p.checkCollision(map.foods.get(i).getBounds())){
+
+					if(map.foods.get(i).isVisible()){
+						p.eat();
+						map.foods.get(i).eaten();	
+					}
+					
+					//map.foods.remove(i);
+					break;
+				}
+			}
+
+
+
 			this.repaint();
 			try{ Thread.sleep(10); } catch(Exception e){ }
 		}

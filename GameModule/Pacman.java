@@ -96,20 +96,24 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
         }
     }
 
-    private void eat(){
+    public void eat(){
         this.foodEaten += 1;
     }
 
+    public int getFoodEaten(){
+        return this.foodEaten;
+    }
+
     public void actionPerformed(ActionEvent e){
-        System.out.println("Food: " + foodEaten);
-        for(int i=0; i<foods.size(); i++){
-            if(this.checkCollision(foods.get(i).getBounds())){
-                this.eat();
-                foods.get(i).eaten();
-                foods.remove(i);
-                break;
-            }
-        }
+        // System.out.println("Food: " + foodEaten);
+        // for(int i=0; i<foods.size(); i++){
+        //     if(this.checkCollision(foods.get(i).getBounds())){
+        //         this.eat();
+        //         foods.get(i).eaten();
+        //         foods.remove(i);
+        //         break;
+        //     }
+        // }
 
         boolean isAdvance = false;
         for(int i=0; i<barriers.size(); i++){

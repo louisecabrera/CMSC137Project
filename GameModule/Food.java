@@ -21,6 +21,14 @@ public class Food{
         return this.y;
     }
 
+    public int getWidth(){
+        return this.width;
+    }
+
+    public int getHeight(){
+        return this.height;
+    }
+
     public void eaten(){
         this.visible = false;
     }
@@ -28,5 +36,9 @@ public class Food{
     // makes rectangle for collision checking
     public Rectangle getBounds(){
         return new Rectangle(this.x, this.y, this.width, this.height);
+    }
+
+    public boolean isVisible(){
+        return this.visible;
     }
 }

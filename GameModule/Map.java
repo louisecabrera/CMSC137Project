@@ -19,9 +19,9 @@ public class Map implements Painter {
 	Graphics g;
 	int tileSize = 30;
 	int mapArray[][];
-	private int mapWidth, mapHeight;
+	int mapWidth, mapHeight;
 	private List<Barrier> barriers = new ArrayList<Barrier>();
-	private List<Food> foods = new ArrayList<Food>();
+	List<Food> foods = new ArrayList<Food>();
 	private Image wall, bg, pac, food;
 
 	public Map(){
@@ -74,13 +74,19 @@ public class Map implements Painter {
 	}
 
 	public void paint(Graphics2D g, Object thePanel, int width, int height){
-		
+
+		int i=0;
+
 		for(int row=0; row<mapHeight; row++){
 			for(int col=0; col<mapWidth; col++){
 				switch(mapArray[row][col]){
 					case 0:
 						g.drawImage(bg, col*this.tileSize, row*this.tileSize, null);
-						g.drawImage(food, col*this.tileSize+10, row*this.tileSize+10, null);
+						if(foods.get(i).isVisible() && i<foods.size()){
+							g.drawImage(food, col*this.tileSize+10, row*this.tileSize+10, null);
+
+						}
+						i++;
 						break;
 					case 1:
 						g.drawImage(wall, col*this.tileSize, row*this.tileSize, null);
