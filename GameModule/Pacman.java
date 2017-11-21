@@ -37,6 +37,9 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
     List<Barrier> barriers = map.getBarriers();
     List<Food> foods = map.getFoods();
 
+    LinkedList<Bullet> b = new LinkedList<Bullet>();
+    Shooter s;
+
     int direction;
     int prevDirection;
     int advancedKey;
@@ -46,6 +49,7 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
     final int UP = 3;
     final int DOWN = 4;
     final int STOP = 0;
+    int bulletDirection;
     boolean newKeyPress = false;
 
     public Pacman(int xPos, int yPos){
@@ -53,7 +57,7 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
         this.foodEaten = 0;
         this.alive = true;
         this.ghost = false;
-        this.speed = 3;
+        this.speed = 1;
 
         this.xPos = xPos;
         this.yPos = yPos;
@@ -72,10 +76,12 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
         this.setPreferredSize(new Dimension(600,600));
         this.setFocusable(true);
         this.setFocusTraversalKeysEnabled(false);
+        s = new Shooter();
     }
 
     public void paint(Graphics2D g, Object thePanel, int width, int height){
         g.drawImage(pac, this.xPos, this.yPos, null);
+        s.render(g);
     }
 
     public void setDirection(int direction){
@@ -106,18 +112,8 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
     }
 
     public void actionPerformed(ActionEvent e){
-        // System.out.println("Food: " + foodEaten);
-        // for(int i=0; i<foods.size(); i++){
-        //     if(this.checkCollision(foods.get(i).getBounds())){
-        //         this.eat();
-        //         foods.get(i).eaten();
-        //         foods.remove(i);
-        //         break;
-        //     }
-        // }
-        //System.out.println("X:"+this.xPos+" Y:"+this.yPos);
 
-        //switch pacman from right to left/left to right portal
+    	//switch pacman from right to left/left to right portal
     	if(this.xPos == 0 && this.yPos == 360){//left to right portal
     			this.xPos = 1260;
     			this.yPos = 360;
@@ -125,7 +121,7 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
     			this.xPos = 0;
     			this.yPos = 360;
     	}
-        
+
         boolean isAdvance = false;
         for(int i=0; i<barriers.size(); i++){
             if(this.checkCollision(barriers.get(i).getBounds())){
@@ -229,6 +225,11 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
                 dx = speed;
                 dy = 0;
             }
+        }
+        else if(key == KeyEvent.VK_SPACE){
+            s.addBullet(new Bullet(this.xPos+10, this.yPos+10));
+            bulletDirection = this.direction;
+            s.tick(bulletDirection);
         }
         newKeyPress = true;
     }

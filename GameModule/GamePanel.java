@@ -48,16 +48,9 @@ public class GamePanel extends JPanel implements Runnable{
 
 	public void run(){
 		while(true){
-			// for(int i=0; i<barriers.size(); i++){
-			// 	System.out.println(p.getBounds());
-			// 	if(p.checkCollision(barriers.get(i).getBounds())){
-			// 		// System.out.println("Collision w/ Barrier: " + barriers.get(i).getX() + ", " + barriers.get(i).getY());
-			// 		p.stopMoving();
-			// 	}
-			// }
 
 			for(int i=0; i<map.foods.size(); i++){
-				System.out.println("Food Eaten: "+p.getFoodEaten());
+				// System.out.println("Food Eaten: "+p.getFoodEaten());
 
 				if(p.checkCollision(map.foods.get(i).getBounds())){
 
@@ -70,8 +63,6 @@ public class GamePanel extends JPanel implements Runnable{
 					break;
 				}
 			}
-
-
 
 			this.repaint();
 			try{ Thread.sleep(10); } catch(Exception e){ }
