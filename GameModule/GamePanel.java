@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements Runnable{
 		layerPainters = new ArrayList<Painter>();
 
 		// this.setBackground(Color.BLACK);
-		this.setPreferredSize(new Dimension(1290,720));
+		this.setPreferredSize(new Dimension(map.mapWidth*30,map.mapHeight*30));
 		layerPainters.add(map);
 
 		p = new Pacman(30,30);
@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
 		Graphics2D g2d = (Graphics2D)g;
 
 		for(Painter painter : layerPainters){
-			painter.paint(g2d, this, 1290,720);
+			painter.paint(g2d, this, map.mapWidth*30,map.mapHeight*30);
 		}
 	}
 

@@ -29,9 +29,7 @@ public class PacmanFrame extends JFrame{
 
 		this.setLayout(new BorderLayout());
 		eastPanel.setBackground(Color.YELLOW);
-		eastPanel.setPreferredSize(new Dimension(200, height));
-		westPanel.setBackground(Color.YELLOW);
-		westPanel.setPreferredSize(new Dimension(200, height));
+		eastPanel.setPreferredSize(new Dimension(250, height));
 		
 		centerPanel.setPreferredSize(new Dimension(height,height));
 		centerPanel.setBackground(Color.BLACK);
@@ -39,9 +37,7 @@ public class PacmanFrame extends JFrame{
 		Thread gp = new Thread(game);
 		centerPanel.add(game);
 
-		// this.add(northPanel, BorderLayout.NORTH);
-		// this.add(eastPanel, BorderLayout.EAST);
-		// this.add(westPanel, BorderLayout.WEST);
+		this.add(eastPanel, BorderLayout.EAST);
 		this.add(centerPanel, BorderLayout.CENTER);
 
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);

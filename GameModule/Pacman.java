@@ -73,7 +73,6 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
 
         this.setVisible(true);
         addKeyListener(this);
-        this.setPreferredSize(new Dimension(600,600));
         this.setFocusable(true);
         this.setFocusTraversalKeysEnabled(false);
         s = new Shooter();
@@ -115,9 +114,9 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
 
     	//switch pacman from right to left/left to right portal
     	if(this.xPos == 0 && this.yPos == 360){//left to right portal
-    			this.xPos = 1260;
+    			this.xPos = (map.mapWidth * 30)-30;
     			this.yPos = 360;
-    	}else if(this.xPos == 1260 && this.yPos == 360){//right to left portal
+    	}else if(this.xPos == ((map.mapWidth * 30)-30) && this.yPos == 360){//right to left portal
     			this.xPos = 0;
     			this.yPos = 360;
     	}
@@ -126,8 +125,6 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
         for(int i=0; i<barriers.size(); i++){
             if(this.checkCollision(barriers.get(i).getBounds())){
             	collided = true;
-                //System.out.println(this.getBounds());
-                //System.out.println("Collision w/ Barrier: " + barriers.get(i).getX() + ", " + barriers.get(i).getY());
                 if(newKeyPress){
                 	if(!(this.direction==this.prevDirection)){
 	                    this.advancedKey = this.direction;
@@ -227,9 +224,13 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
             }
         }
         else if(key == KeyEvent.VK_SPACE){
-            s.addBullet(new Bullet(this.xPos+10, this.yPos+10));
-            bulletDirection = this.direction;
-            s.tick(bulletDirection);
+            if(this.foodEaten >= 5){
+                s.addBullet(new Bullet(this.xPos+10, this.yPos+10));
+                bulletDirection = this.direction;
+                s.tick(bulletDirection);    
+                this.foodEaten-=5;
+            }
+            
         }
         newKeyPress = true;
     }

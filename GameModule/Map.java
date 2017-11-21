@@ -36,7 +36,7 @@ public class Map implements Painter {
 
 	public void readMap(){
 		try{
-			BufferedReader reader = new BufferedReader(new FileReader("maps/input.txt"));
+			BufferedReader reader = new BufferedReader(new FileReader("maps/map2.txt"));
 			this.mapWidth = Integer.parseInt(reader.readLine());
 			this.mapHeight = Integer.parseInt(reader.readLine());
 
