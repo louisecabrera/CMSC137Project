@@ -53,7 +53,7 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
         this.foodEaten = 0;
         this.alive = true;
         this.ghost = false;
-        this.speed = 1;
+        this.speed = 3;
 
         this.xPos = xPos;
         this.yPos = yPos;
@@ -115,7 +115,17 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
         //         break;
         //     }
         // }
+        //System.out.println("X:"+this.xPos+" Y:"+this.yPos);
 
+        //switch pacman from right to left/left to right portal
+    	if(this.xPos == 0 && this.yPos == 360){//left to right portal
+    			this.xPos = 1260;
+    			this.yPos = 360;
+    	}else if(this.xPos == 1260 && this.yPos == 360){//right to left portal
+    			this.xPos = 0;
+    			this.yPos = 360;
+    	}
+        
         boolean isAdvance = false;
         for(int i=0; i<barriers.size(); i++){
             if(this.checkCollision(barriers.get(i).getBounds())){
