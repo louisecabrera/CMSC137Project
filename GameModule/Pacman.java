@@ -40,6 +40,7 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
     int direction;
     int prevDirection;
     int advancedKey;
+    boolean collided = false;
     final int LEFT = 1;
     final int RIGHT = 2;
     final int UP = 3;
@@ -118,10 +119,13 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
         boolean isAdvance = false;
         for(int i=0; i<barriers.size(); i++){
             if(this.checkCollision(barriers.get(i).getBounds())){
+            	collided = true;
                 //System.out.println(this.getBounds());
                 //System.out.println("Collision w/ Barrier: " + barriers.get(i).getX() + ", " + barriers.get(i).getY());
                 if(newKeyPress){
-                    this.advancedKey = this.direction;
+                	if(!(this.direction==this.prevDirection)){
+	                    this.advancedKey = this.direction;
+	                }
                     this.direction = this.prevDirection;
                     this.setDirection(this.direction);
                 }
