@@ -56,7 +56,7 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
         this.foodEaten = 0;
         this.alive = true;
         this.ghost = false;
-        this.speed = 2;
+        this.speed = 1;
 
         this.xPos = xPos;
         this.yPos = yPos;

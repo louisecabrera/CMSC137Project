@@ -1,10 +1,11 @@
 import java.awt.Rectangle;
+import java.util.Random;
 
 public class Food{
 
     private int x, y, width, height;
     private boolean visible;
-    int timer;
+    private int timer;
     
     public Food(int x, int y, int width, int height){
         this.x = x;
@@ -12,6 +13,7 @@ public class Food{
         this.width = width;
         this.height = height;
         this.visible = true;
+        this.timer = 0;
     }
 
     public int getX(){
@@ -32,11 +34,14 @@ public class Food{
 
     public void eaten(){
         this.visible = false;
-        this.timer = 10000;
+
+        Random r = new Random();
+        int num = r.nextInt(2800)+200;
+        this.timer = num;
     }
 
     public void awaitRespawn(){
-        this.timer = this.timer - 10;
+        this.timer = this.timer - 1;
         if(this.timer == 0){
             this.respawn();
         }
