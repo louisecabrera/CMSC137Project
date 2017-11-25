@@ -9,29 +9,21 @@ import java.awt.Toolkit;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 
-public class PacmanFrame extends JFrame{
+public class PacmanFrame extends JFrame implements Constants{
 
 	private JPanel northPanel = new JPanel();
 	private JPanel southPanel = new JPanel();
 	private JPanel eastPanel = new JPanel();
 	private JPanel westPanel = new JPanel();
 	private JPanel centerPanel = new JPanel();
-
-	Dimension screenSize;
-	private int height, width;
 	
 	public PacmanFrame(){
-		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		Double h = screenSize.getHeight();
-		height = h.intValue();
-		Double w = screenSize.getWidth();
-		width = w.intValue();
 
 		this.setLayout(new BorderLayout());
 		eastPanel.setBackground(Color.YELLOW);
-		eastPanel.setPreferredSize(new Dimension(250, height));
+		eastPanel.setPreferredSize(new Dimension(250, Constants.HEIGHT));
 		
-		centerPanel.setPreferredSize(new Dimension(height,height));
+		centerPanel.setPreferredSize(new Dimension(Constants.HEIGHT,Constants.HEIGHT));
 		centerPanel.setBackground(Color.BLACK);
 		GamePanel game = new GamePanel();
 		Thread gp = new Thread(game);
