@@ -37,7 +37,6 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
     List<Barrier> barriers = map.getBarriers();
     List<Food> foods = map.getFoods();
 
-    LinkedList<Bullet> b = new LinkedList<Bullet>();
     Shooter s;
 
     int direction;
@@ -57,7 +56,7 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
         this.foodEaten = 0;
         this.alive = true;
         this.ghost = false;
-        this.speed = 1;
+        this.speed = 2;
 
         this.xPos = xPos;
         this.yPos = yPos;

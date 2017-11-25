@@ -33,6 +33,10 @@ public class Food{
         this.visible = false;
     }
 
+    public void respawn(){
+        this.visible = true;
+    }
+
     // makes rectangle for collision checking
     public Rectangle getBounds(){
         return new Rectangle(this.x, this.y, this.width, this.height);

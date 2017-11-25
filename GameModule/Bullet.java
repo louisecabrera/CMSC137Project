@@ -22,6 +22,8 @@ public class Bullet {
 	public Bullet(int x, int y){
 		this.x = x;
 		this.y = y;
+		this.width = 10;
+		this.height = 10;
 
 		try{
 			bullet = ImageIO.read(new File("images/bullet.png"));
@@ -62,4 +64,9 @@ public class Bullet {
 	public Rectangle getBounds(){
 		return new Rectangle(x, y, width, height);
 	}
+
+	public boolean checkCollision(Rectangle entity){
+        return this.getBounds().intersects(entity);
+	}
+	
 }
