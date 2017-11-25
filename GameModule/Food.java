@@ -4,6 +4,7 @@ public class Food{
 
     private int x, y, width, height;
     private boolean visible;
+    int timer;
     
     public Food(int x, int y, int width, int height){
         this.x = x;
@@ -31,6 +32,14 @@ public class Food{
 
     public void eaten(){
         this.visible = false;
+        this.timer = 10000;
+    }
+
+    public void awaitRespawn(){
+        this.timer = this.timer - 10;
+        if(this.timer == 0){
+            this.respawn();
+        }
     }
 
     public void respawn(){

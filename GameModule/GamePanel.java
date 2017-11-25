@@ -51,6 +51,9 @@ public class GamePanel extends JPanel implements Runnable{
 
 			for(int i=0; i<map.foods.size(); i++){
 				// System.out.println("Food Eaten: "+p.getFoodEaten());
+				if(!map.foods.get(i).isVisible()){
+					map.foods.get(i).awaitRespawn();
+				}
 
 				if(p.checkCollision(map.foods.get(i).getBounds())){
 
