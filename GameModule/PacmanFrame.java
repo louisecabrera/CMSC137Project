@@ -11,13 +11,15 @@ import java.awt.GridBagLayout;
 
 public class PacmanFrame extends JFrame implements Constants{
 
+	int SERVER = 1, CLIENT = 0;	
+
 	private JPanel northPanel = new JPanel();
 	private JPanel southPanel = new JPanel();
 	private JPanel eastPanel = new JPanel();
 	private JPanel westPanel = new JPanel();
 	private JPanel centerPanel = new JPanel();
 	
-	public PacmanFrame(){
+	public PacmanFrame(int type, String username){
 
 		this.setLayout(new BorderLayout());
 		eastPanel.setBackground(Color.YELLOW);
@@ -39,5 +41,12 @@ public class PacmanFrame extends JFrame implements Constants{
 
 		gp.start();
 		try{ gp.join(); } catch(Exception e){ }
+
+		// if(type == SERVER){
+
+		// }
+		// else if(type == CLIENT){
+			
+		// }
 	}
 }

@@ -102,8 +102,8 @@ public class PacmanMenu extends JFrame implements Constants{
 			public void mouseClicked(MouseEvent e){
 				String name = serverPanel.getName();
 				String players = serverPanel.getNumOfPlayers();
-				System.out.println(name);
-				System.out.println(players);
+
+				PacmanFrame pacframe = new PacmanFrame(1, name);
 
 				// start servers here
 				// start chat server
