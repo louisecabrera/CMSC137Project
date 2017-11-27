@@ -12,7 +12,7 @@ public class ServerPanel extends JPanel implements Constants{
 	private JPanel centerPanel = new JPanel();
 	private Font font = new Font("Calibri", Font.PLAIN, 30);
 
-	private JTextField username, numOfPlayers;
+	JTextField username, numOfPlayers;
 
 	Image back1, back2, go1, go2;
 	JLabel back, go;
@@ -31,8 +31,10 @@ public class ServerPanel extends JPanel implements Constants{
 		// center panel components
 		username = new JTextField(10);
 		username.setFont(font);
+		username.setText("");
 		numOfPlayers = new JTextField(10);
 		numOfPlayers.setFont(font);
+		numOfPlayers.setText("");
 
 		JLabel uname = new JLabel("Name");
 		uname.setFont(font);

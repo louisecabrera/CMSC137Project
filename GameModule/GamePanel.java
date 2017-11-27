@@ -36,6 +36,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 		this.add(p);
 		this.setVisible(true);
+		this.requestFocusInWindow();
 	}
 
 	public void paint(Graphics g){

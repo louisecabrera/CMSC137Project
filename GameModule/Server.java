@@ -1,19 +1,53 @@
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
-public class Server {
+public class Server extends JPanel {
+
+	JTextField typeArea;
+	JTextArea viewArea;
 
 	private ServerSocket serverSocket;
-	public List<Client> clients = new ArrayList<Client>();
+	public LinkedList<Client> clients = new LinkedList<Client>();
 	private ConnectionListener connectionListener;
 
 	public Server(int port) {
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+
 		try {
 			serverSocket = new ServerSocket(port);
 		} catch(IOException e) { }
 
 		connectionListener = new ConnectionListener(this);
+
+		typeArea = new JTextField(20);
+		viewArea = new JTextArea(20,20);
+		viewArea.setEditable(false);
+		viewArea.setLineWrap(true);
+
+		// typeArea.addKeyListener(new KeyListener(){
+		// 	public void keyPressed(KeyEvent e){
+				
+		// 	}
+		// 	public void keyReleased(KeyEvent e){ }
+		// 	public void keyTyped(KeyEvent e){ }
+		// });
+
+		c.fill= GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		add(viewArea, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		add(typeArea, c);
+
+		setVisible(true);
 	}
 
 	// reads input of server, prints on terminal, then sends to all clients
@@ -66,6 +100,10 @@ public class Server {
 	// return socket
 	public ServerSocket getSocket() {
 		return serverSocket;
+	}
+
+	public int getNumberOfClients(){
+		return clients.size();
 	}
 
 	// public static void main(String[] args) throws IOException{

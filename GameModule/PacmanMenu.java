@@ -34,6 +34,10 @@ public class PacmanMenu extends JFrame implements Constants{
 			public void mouseClicked(MouseEvent e){
 				menuPanel.setVisible(false);
 				remove(menuPanel);
+
+				serverPanel.username.setText("");
+				serverPanel.numOfPlayers.setText("");
+
 				serverPanel.setVisible(true);
 				add(serverPanel);
 			}
@@ -100,10 +104,24 @@ public class PacmanMenu extends JFrame implements Constants{
 				(serverPanel.go).setIcon(new ImageIcon((serverPanel.go1)));
 			}
 			public void mouseClicked(MouseEvent e){
-				String name = serverPanel.getName();
-				String players = serverPanel.getNumOfPlayers();
+				final String name = (serverPanel.getName()).trim();
+				final String players = (serverPanel.getNumOfPlayers()).trim();
 
-				PacmanFrame pacframe = new PacmanFrame(1, name);
+
+				if(name==null || name.isEmpty() || players==null || players.isEmpty()){
+					// checks if textfields are empty
+				}
+				else{
+					serverPanel.setVisible(false);
+					menuPanel.setVisible(true);
+					add(menuPanel);
+
+					// opens gamepanel
+					Thread game = new Thread(() -> {
+						PacmanFrame pacframe = new PacmanFrame(1, name);
+					});
+					game.start();	
+				}
 
 				// start servers here
 				// start chat server
