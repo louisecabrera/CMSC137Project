@@ -26,9 +26,11 @@ public class PacmanFrame extends JFrame implements Constants{
 	
 	public PacmanFrame(int type, String name){
 		Server chatServer = new Server(2222);
+		ClientChatGUI chatClient = new ClientChatGUI(name);
 
 		this.setLayout(new BorderLayout());
 		eastPanel.setBackground(Color.YELLOW);
+		eastPanel.setLayout(new BorderLayout());
 		eastPanel.setPreferredSize(new Dimension(250, Constants.HEIGHT));
 		
 		centerPanel.setPreferredSize(new Dimension(Constants.HEIGHT,Constants.HEIGHT));
@@ -40,18 +42,7 @@ public class PacmanFrame extends JFrame implements Constants{
 
 		centerPanel.addMouseListener(new MouseListener(){
 			public void mouseClicked(MouseEvent e){
-				chatServer.typeArea.setFocusable(false);
 				game.setFocusable(true);
-			}
-			public void mouseEntered(MouseEvent e){ }
-			public void mouseExited(MouseEvent e){ }
-			public void mousePressed(MouseEvent e){ }
-			public void mouseReleased(MouseEvent e){ }
-		});
-
-		chatServer.typeArea.addMouseListener(new MouseListener(){
-			public void mouseClicked(MouseEvent e){
-				chatServer.typeArea.setFocusable(true);
 			}
 			public void mouseEntered(MouseEvent e){ }
 			public void mouseExited(MouseEvent e){ }
@@ -61,16 +52,30 @@ public class PacmanFrame extends JFrame implements Constants{
 
 		// starts server
 		if(type == SERVER){
-			
+			// starts server
 			Thread server = new Thread(() -> {
 				
-				try{ chatServer.start(name); } catch(Exception e){ }
+				try{ chatServer.start(); } catch(Exception e){ }
 			});
 			server.start();
-			eastPanel.add(chatServer);
+
+			// makes server a client
+			Thread client = new Thread(() -> {
+				chatClient.start();
+			});
+			client.start();
+
+			eastPanel.add(chatClient, BorderLayout.SOUTH);
 		}
 		else if(type == CLIENT){
+			System.out.println("New Client");
+			// adds client
+			Thread client = new Thread(() -> {
+				chatClient.start();
+			});
+			client.start();
 
+			eastPanel.add(chatClient, BorderLayout.SOUTH);
 		}
 
 		centerPanel.add(game);

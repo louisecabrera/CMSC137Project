@@ -56,6 +56,9 @@ public class PacmanMenu extends JFrame implements Constants{
 			public void mouseClicked(MouseEvent e){	
 				menuPanel.setVisible(false);
 				remove(menuPanel);
+
+				clientPanel.username.setText("");
+
 				clientPanel.setVisible(true);
 				add(clientPanel);
 			}
@@ -146,7 +149,7 @@ public class PacmanMenu extends JFrame implements Constants{
 				clientPanel.setVisible(false);
 				remove(clientPanel);
 				menuPanel.setVisible(true);
-				add(menuPanel);
+				add(menuPanel);	
 			}
 			public void mousePressed(MouseEvent e){ }
 			public void mouseReleased(MouseEvent e){ }	
@@ -160,7 +163,22 @@ public class PacmanMenu extends JFrame implements Constants{
 				(clientPanel.go).setIcon(new ImageIcon((clientPanel.go1)));
 			}
 			public void mouseClicked(MouseEvent e){
-				String name = clientPanel.getName();
+				final String name = (clientPanel.getName()).trim();
+
+				if(name==null || name.isEmpty()){
+					// checks if textfield is empty
+				}
+				else{
+					clientPanel.setVisible(false);
+					menuPanel.setVisible(true);
+					add(menuPanel);
+
+					// opens gamepanel
+					Thread game = new Thread(() -> {
+						PacmanFrame pacframe = new PacmanFrame(0, name);
+					});
+					game.start();	
+				}
 
 				// create new client for chat
 				// create new client for udp

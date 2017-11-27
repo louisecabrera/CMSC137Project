@@ -13,7 +13,7 @@ public class ClientPanel extends JPanel implements Constants {
 	Image back1, back2, go1, go2;
 	JLabel back, go;
 
-	private JTextField username;
+	JTextField username;
 
 	public ClientPanel(){
 		try{

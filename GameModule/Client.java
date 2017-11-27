@@ -34,7 +34,7 @@ public class Client implements Runnable {
 					
 				}
 
-				System.out.print(in);
+				// System.out.print(in);
 
 				for(Client c : clients){
 					c.send(in);
