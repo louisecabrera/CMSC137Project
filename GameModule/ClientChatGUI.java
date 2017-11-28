@@ -9,14 +9,15 @@ public class ClientChatGUI extends JPanel {
 	
 	JTextField typeArea;
 	JTextArea viewArea;
-	String name;
+	String name, servername;
 	GamePanel game;
 
-	public ClientChatGUI(String name, GamePanel game){
+	public ClientChatGUI(String name, GamePanel game, String servername){
 		this.game = game;
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		this.name = name;
+		this.servername = servername;
 
 		typeArea = new JTextField(20);
 		viewArea = new JTextArea(20,20);
@@ -41,7 +42,7 @@ public class ClientChatGUI extends JPanel {
 	public void start(){
 		Scanner scanner = new Scanner(System.in);
 
-		try (Socket socket = new Socket("localhost", 2222);
+		try (Socket socket = new Socket(servername, 2222);
 			DataInputStream in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 			DataOutputStream out = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 			BufferedReader In = new BufferedReader(new InputStreamReader(System.in))) {

@@ -12,7 +12,7 @@ public class ServerPanel extends JPanel implements Constants{
 	private JPanel centerPanel = new JPanel();
 	private Font font = new Font("Calibri", Font.PLAIN, 30);
 
-	JTextField username, numOfPlayers;
+	JTextField username, numOfPlayers, servername;
 
 	Image back1, back2, go1, go2;
 	JLabel back, go;
@@ -35,6 +35,9 @@ public class ServerPanel extends JPanel implements Constants{
 		numOfPlayers = new JTextField(10);
 		numOfPlayers.setFont(font);
 		numOfPlayers.setText("");
+		servername = new JTextField(10);
+		servername.setFont(font);
+		servername.setText("");
 
 		JLabel uname = new JLabel("Name");
 		uname.setFont(font);
@@ -42,6 +45,9 @@ public class ServerPanel extends JPanel implements Constants{
 		JLabel players = new JLabel("Number of Players");
 		players.setFont(font);
 		players.setForeground(Color.WHITE);
+		JLabel sname = new JLabel("Server Name");
+		sname.setFont(font);
+		sname.setForeground(Color.WHITE);
 
 		centerPanel.setLayout(new GridBagLayout());
 		centerPanel.setBackground(Color.BLACK);
@@ -66,6 +72,16 @@ public class ServerPanel extends JPanel implements Constants{
 		c.gridx = 2;
 		c.gridy = 1;
 		centerPanel.add(numOfPlayers, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 2;
+		centerPanel.add(sname, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 2;
+		centerPanel.add(servername, c);
 		// end of center panel
 
 		// south panel components
@@ -92,5 +108,9 @@ public class ServerPanel extends JPanel implements Constants{
 
 	public String getNumOfPlayers(){
 		return numOfPlayers.getText();
+	}
+
+	public String getServerName(){
+		return servername.getText();
 	}
 }

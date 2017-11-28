@@ -21,13 +21,13 @@ public class PacmanFrame extends JFrame implements Constants{
 	private JPanel westPanel = new JPanel();
 	private JPanel centerPanel = new JPanel();
 	
-	public PacmanFrame(int type, String name){
+	public PacmanFrame(int type, String name, String servername){
 		GamePanel game = new GamePanel();
 		Thread gp = new Thread(game);
 		gp.start();
 
 		Server chatServer = new Server(2222);
-		ClientChatGUI chatClient = new ClientChatGUI(name, game);
+		ClientChatGUI chatClient = new ClientChatGUI(name, game, servername);
 
 		this.setLayout(new BorderLayout());
 		eastPanel.setBackground(Color.YELLOW);

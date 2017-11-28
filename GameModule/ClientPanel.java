@@ -13,7 +13,7 @@ public class ClientPanel extends JPanel implements Constants {
 	Image back1, back2, go1, go2;
 	JLabel back, go;
 
-	JTextField username;
+	JTextField username, servername;
 
 	public ClientPanel(){
 		try{
@@ -28,10 +28,19 @@ public class ClientPanel extends JPanel implements Constants {
 		// center panel components
 		username = new JTextField(10);
 		username.setFont(font);
+		username.setText("");
+
+		servername = new JTextField(10);
+		servername.setFont(font);
+		servername.setText("");
 
 		JLabel uname = new JLabel("Name");
 		uname.setFont(font);
 		uname.setForeground(Color.WHITE);
+
+		JLabel sname = new  JLabel("Server Name");
+		sname.setFont(font);
+		sname.setForeground(Color.WHITE);
 
 		centerPanel.setLayout(new GridBagLayout());
 		centerPanel.setBackground(Color.BLACK);
@@ -46,6 +55,16 @@ public class ClientPanel extends JPanel implements Constants {
 		c.gridx = 2;
 		c.gridy = 0;
 		centerPanel.add(username, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		centerPanel.add(sname, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 1;
+		centerPanel.add(servername, c);
 		// end of center panel
 
 		// south panel components
@@ -68,5 +87,9 @@ public class ClientPanel extends JPanel implements Constants {
 
 	public String getName(){
 		return username.getText();
+	}
+
+	public String getServerName(){
+		return servername.getText();
 	}
 }
