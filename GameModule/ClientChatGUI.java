@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import javax.swing.text.DefaultCaret;
+
 public class ClientChatGUI extends JPanel {
 	
 	JTextField typeArea;
@@ -23,6 +25,8 @@ public class ClientChatGUI extends JPanel {
 		viewArea = new JTextArea(20,20);
 		viewArea.setEditable(false);
 		viewArea.setLineWrap(true);
+		DefaultCaret caret = (DefaultCaret)viewArea.getCaret();
+    	caret.setUpdatePolicy(DefaultCaret.OUT_BOTTOM);
 
 		JScrollPane scroll = new JScrollPane(viewArea);
 
