@@ -10,8 +10,10 @@ public class ClientChatGUI extends JPanel {
 	JTextField typeArea;
 	JTextArea viewArea;
 	String name;
+	GamePanel game;
 
-	public ClientChatGUI(String name){
+	public ClientChatGUI(String name, GamePanel game){
+		this.game = game;
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		this.name = name;
@@ -69,6 +71,9 @@ public class ClientChatGUI extends JPanel {
 							out.flush();
 						} catch(Exception ioe){ }
 						typeArea.setText("");
+					}
+					else if(key == KeyEvent.VK_TAB){
+						game.requestFocus();
 					}
 				}
 				public void keyReleased(KeyEvent e){ }

@@ -11,9 +11,6 @@ import java.awt.Toolkit;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
-
 public class PacmanFrame extends JFrame implements Constants{
 
 	int SERVER = 1, CLIENT = 0;
@@ -25,8 +22,12 @@ public class PacmanFrame extends JFrame implements Constants{
 	private JPanel centerPanel = new JPanel();
 	
 	public PacmanFrame(int type, String name){
+		GamePanel game = new GamePanel();
+		Thread gp = new Thread(game);
+		gp.start();
+
 		Server chatServer = new Server(2222);
-		ClientChatGUI chatClient = new ClientChatGUI(name);
+		ClientChatGUI chatClient = new ClientChatGUI(name, game);
 
 		this.setLayout(new BorderLayout());
 		eastPanel.setBackground(Color.YELLOW);
@@ -35,20 +36,6 @@ public class PacmanFrame extends JFrame implements Constants{
 		
 		centerPanel.setPreferredSize(new Dimension(Constants.HEIGHT,Constants.HEIGHT));
 		centerPanel.setBackground(Color.BLACK);
-
-		GamePanel game = new GamePanel();
-		Thread gp = new Thread(game);
-		gp.start();
-
-		centerPanel.addMouseListener(new MouseListener(){
-			public void mouseClicked(MouseEvent e){
-				game.setFocusable(true);
-			}
-			public void mouseEntered(MouseEvent e){ }
-			public void mouseExited(MouseEvent e){ }
-			public void mousePressed(MouseEvent e){ }
-			public void mouseReleased(MouseEvent e){ }
-		});
 
 		// starts server
 		if(type == SERVER){
