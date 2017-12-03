@@ -87,6 +87,7 @@ public class ClientChatGUI extends JPanel {
 
 			try {
 				// loop that writes user input to stream
+				
 				while((msg = In.readLine()) != null) {
 					
 					if(msg.equals("/q")){
@@ -97,8 +98,9 @@ public class ClientChatGUI extends JPanel {
 						out.writeUTF(name + ": " + msg + "\n");
 						out.flush();
 					}
-					
+						
 				}
+				
 			} catch(Exception e) { }
 
 		} catch(IOException e) { }

@@ -85,6 +85,10 @@ public class Client implements Runnable {
 		connection.flush();
 	}
 
+	public int getNumberOfClients(){
+		return clients.size();
+	}
+
 	public static void main(String[] args) {
 		// String serverName = args[0];
 		// int port = Integer.parseInt(args[1]);

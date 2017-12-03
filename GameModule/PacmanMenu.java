@@ -37,6 +37,7 @@ public class PacmanMenu extends JFrame implements Constants{
 
 				serverPanel.username.setText("");
 				serverPanel.numOfPlayers.setText("");
+				serverPanel.servername.setText("");
 
 				serverPanel.setVisible(true);
 				add(serverPanel);
@@ -58,6 +59,7 @@ public class PacmanMenu extends JFrame implements Constants{
 				remove(menuPanel);
 
 				clientPanel.username.setText("");
+				clientPanel.servername.setText("");
 
 				clientPanel.setVisible(true);
 				add(clientPanel);
@@ -122,7 +124,7 @@ public class PacmanMenu extends JFrame implements Constants{
 
 					// opens gamepanel
 					Thread game = new Thread(() -> {
-						PacmanFrame pacframe = new PacmanFrame(1, name,servername);
+						PacmanFrame pacframe = new PacmanFrame(1, name,servername,players);	
 					});
 					game.start();	
 				}
@@ -177,7 +179,7 @@ public class PacmanMenu extends JFrame implements Constants{
 
 					// opens gamepanel
 					Thread game = new Thread(() -> {
-						PacmanFrame pacframe = new PacmanFrame(0, name, servername);
+						PacmanFrame pacframe = new PacmanFrame(0, name, servername,"0");
 					});
 					game.start();	
 				}

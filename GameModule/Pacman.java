@@ -20,7 +20,7 @@ import java.io.File;
 
 import java.util.*;
 
-public class Pacman extends JPanel implements Painter, KeyListener, ActionListener {
+public class Pacman extends JPanel implements Painter, ActionListener{
     Timer t = new Timer(5, this);
     Graphics g;
     int dx=0, dy=0;
@@ -71,7 +71,7 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
         } catch(Exception e){ }
 
         this.setVisible(true);
-        addKeyListener(this);
+        // addKeyListener(this);
         this.setFocusable(true);
         this.setFocusTraversalKeysEnabled(false);
         s = new Shooter();
@@ -167,24 +167,28 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
         }
 
         if(dx<0){
+            System.out.println("left");
             if(this.xPos>=1){
                 this.xPos += dx;
                 this.yPos += dy;
             }
         }
         else if(dx>0){
+            System.out.println("right");
             if(this.xPos<1290-30){
                 this.xPos += dx;
                 this.yPos += dy;
             }
         }
         else if(dy<0){
+            System.out.println("up");
             if(this.yPos>=1){
                 this.xPos += dx;
                 this.yPos += dy;
             }
         }
         else if(dy>0){
+            System.out.println("down");
             if(this.yPos<720-30){
                 this.xPos += dx;
                 this.yPos += dy;
@@ -198,52 +202,52 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
         this.prevDirection = this.direction;
     }
 
-    public void keyPressed(KeyEvent e){
-        int key = e.getKeyCode();
+    // public void keyPressed(KeyEvent e){
+    //     int key = e.getKeyCode();
 
-        if(key == KeyEvent.VK_UP){
-            this.direction = UP;
-            if(this.yPos>=1){
-                dy = -1*speed;
-                dx = 0;
-            }
-        }
-        else if(key == KeyEvent.VK_DOWN){
-            this.direction = DOWN;
-            if(this.yPos<720-30){
-                dy = speed;
-                dx = 0;
-            }
-        }
-        else if(key == KeyEvent.VK_LEFT){
-            this.direction = LEFT;
-            if(this.xPos>=1){
-                dx = -1*speed;
-                dy = 0;
-            }
-        }
-        else if(key == KeyEvent.VK_RIGHT){
-            this.direction = RIGHT;
-            if(this.xPos<1290-30){
-                dx = speed;
-                dy = 0;
-            }
-        }
-        else if(key == KeyEvent.VK_SPACE){
-            if(this.foodEaten >= 5){
-                s.addBullet(new Bullet(this.xPos+10, this.yPos+10));
-                bulletDirection = this.direction;
-                s.tick(bulletDirection);    
-                this.foodEaten-=5;
-            }
+    //     if(key == KeyEvent.VK_UP){
+    //         this.direction = UP;
+    //         if(this.yPos>=1){
+    //             dy = -1*speed;
+    //             dx = 0;
+    //         }
+    //     }
+    //     else if(key == KeyEvent.VK_DOWN){
+    //         this.direction = DOWN;
+    //         if(this.yPos<720-30){
+    //             dy = speed;
+    //             dx = 0;
+    //         }
+    //     }
+    //     else if(key == KeyEvent.VK_LEFT){
+    //         this.direction = LEFT;
+    //         if(this.xPos>=1){
+    //             dx = -1*speed;
+    //             dy = 0;
+    //         }
+    //     }
+    //     else if(key == KeyEvent.VK_RIGHT){
+    //         this.direction = RIGHT;
+    //         if(this.xPos<1290-30){
+    //             dx = speed;
+    //             dy = 0;
+    //         }
+    //     }
+    //     else if(key == KeyEvent.VK_SPACE){
+    //         if(this.foodEaten >= 5){
+    //             s.addBullet(new Bullet(this.xPos+10, this.yPos+10));
+    //             bulletDirection = this.direction;
+    //             s.tick(bulletDirection);    
+    //             this.foodEaten-=5;
+    //         }
             
-        }
-        newKeyPress = true;
-    }
+    //     }
+    //     newKeyPress = true;
+    // }
 
-    public void keyReleased(KeyEvent e){}
+    // public void keyReleased(KeyEvent e){}
 
-    public void keyTyped(KeyEvent e){}
+    // public void keyTyped(KeyEvent e){}
 
     public Rectangle getBounds(){
         int x = 0;
@@ -270,5 +274,21 @@ public class Pacman extends JPanel implements Painter, KeyListener, ActionListen
     public void stopMoving(){
         dx = 0;
         dy = 0;
+    }
+
+    public void setXPos(int x){
+        this.xPos = x;
+    }
+
+    public void setYPos(int y){
+        this.yPos = y;
+    }
+
+    public int getX(){
+        return this.xPos;
+    }
+
+    public int getY(){
+        return this.yPos;
     }
 }
