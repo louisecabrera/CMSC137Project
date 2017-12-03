@@ -208,11 +208,13 @@ public class Pacman extends JPanel implements Painter, ActionListener, KeyListen
         newKeyPress = false;
         this.prevDirection = this.direction;
 
+        // sends string to be read by other clients
         if(prevX!=xPos || prevY!=yPos){
             send("PLAYER "+name+" "+xPos+" "+yPos);
         }
     }
 
+    // this sends player information
     public void send(String msg){
         try{
             byte[] buf = msg.getBytes();
