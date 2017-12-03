@@ -23,7 +23,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-public class GamePanel extends JPanel implements Runnable, Constants, KeyListener{
+public class GamePanel extends JPanel implements Runnable, Constants{
 	
 	Image pac;
 	Map map = new Map();
@@ -54,8 +54,7 @@ public class GamePanel extends JPanel implements Runnable, Constants, KeyListene
 		this.setPreferredSize(new Dimension(map.mapWidth*30,map.mapHeight*30));
 		layerPainters.add(map);
 
-		p = new Pacman(x,y);
-		p.addKeyListener(this);
+		p = new Pacman(x,y,name,server);
 
 		layerPainters.add(p);
 
@@ -123,11 +122,16 @@ public class GamePanel extends JPanel implements Runnable, Constants, KeyListene
 				send("CONNECT "+name);
 			}
 			else if(connected){
+				// updates board info if receives a player from serverData
 				if(serverData.startsWith("PLAYER")){
 					String[] playersInfo = serverData.split(":");
-					System.out.println("length:"+playersInfo.length);
-					for(int i=0; i<playersInfo.length; i++){
+					
+					for(int i=0; i<playersInfo.length-1; i++){
 						String[] playerInfo = playersInfo[i].split(" ");
+
+						// for(int j=0; j<playerInfo.length; j++){
+						// 	System.out.println(playerInfo[j]);
+						// }
 
 						String pname = playerInfo[1];
 						int x = Integer.parseInt(playerInfo[2]);
@@ -144,55 +148,56 @@ public class GamePanel extends JPanel implements Runnable, Constants, KeyListene
 		}
 	}
 
-    public void keyPressed(KeyEvent e){
-        int key = e.getKeyCode();
-        prevX=p.getX();
-        prevY=p.getY();
+    // public void keyPressed(KeyEvent e){
+    //     int key = e.getKeyCode();
+    //     prevX=p.getX();
+    //     prevY=p.getY();
 
-        if(key == KeyEvent.VK_UP){
-            p.direction = UP;
-            if(p.getY()>=1){
-                p.dy = -1*speed;
-                p.dx = 0;
-            }
-        }
-        else if(key == KeyEvent.VK_DOWN){
-            p.direction = DOWN;
-            if(p.getY()<720-30){
-                p.dy = speed;
-                p.dx = 0;
-            }
-        }
-        else if(key == KeyEvent.VK_LEFT){
-            p.direction = LEFT;
-            if(p.getX()>=1){
-                p.dx = -1*speed;
-                p.dy = 0;
-            }
-        }
-        else if(key == KeyEvent.VK_RIGHT){
-            p.direction = RIGHT;
-            if(p.getX()<1290-30){
-                p.dx = speed;
-                p.dy = 0;
-            }
-        }
-        // else if(key == KeyEvent.VK_SPACE){
-        //     if(this.foodEaten >= 5){
-        //         s.addBullet(new Bullet(this.xPos+10, this.yPos+10));
-        //         bulletDirection = this.direction;
-        //         s.tick(bulletDirection);    
-        //         this.foodEaten-=5;
-        //     }
+    //     if(key == KeyEvent.VK_UP){
+    //         p.direction = UP;
+    //         if(p.getY()>=1){
+    //             p.dy = -1*speed;
+    //             p.dx = 0;
+    //         }
+    //     }
+    //     else if(key == KeyEvent.VK_DOWN){
+    //         p.direction = DOWN;
+    //         if(p.getY()<720-30){
+    //             p.dy = speed;
+    //             p.dx = 0;
+    //         }
+    //     }
+    //     else if(key == KeyEvent.VK_LEFT){
+    //         p.direction = LEFT;
+    //         if(p.getX()>=1){
+    //             p.dx = -1*speed;
+    //             p.dy = 0;
+    //         }
+    //     }
+    //     else if(key == KeyEvent.VK_RIGHT){
+    //         p.direction = RIGHT;
+    //         if(p.getX()<1290-30){
+    //             p.dx = speed;
+    //             p.dy = 0;
+    //         }
+    //     }
+    //     // else if(key == KeyEvent.VK_SPACE){
+    //     //     if(this.foodEaten >= 5){
+    //     //         s.addBullet(new Bullet(this.xPos+10, this.yPos+10));
+    //     //         bulletDirection = this.direction;
+    //     //         s.tick(bulletDirection);    
+    //     //         this.foodEaten-=5;
+    //     //     }
             
-        // }
-        p.newKeyPress = true;
+    //     // }
+    //     p.newKeyPress = true;
 
-        if(prevX!=p.getX() || prevY!=p.getY()){
-        	send("PLAYER "+name+" "+p.getX()+" "+p.getY());
-        }
+    //     // this is supposed to update board information but does not work
+    //     // if(prevX!=p.getX() || prevY!=p.getY()){
+    //     // 	send("PLAYER "+name+" "+p.getX()+" "+p.getY());
+    //     // }
 
-    }
+    // }
 
     public void keyReleased(KeyEvent e){}
 
