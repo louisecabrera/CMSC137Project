@@ -94,6 +94,8 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 			painter.paint(g2d, this, map.mapWidth*30,map.mapHeight*30);
 		}
 		// fix pacman render here too
+		g.setColor(new Color(232, 208, 53)); //somewhat gold-ish
+		g.fillOval(x, y, 30, 30);
 		
 	}
 
