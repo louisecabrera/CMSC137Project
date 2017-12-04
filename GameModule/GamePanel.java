@@ -168,16 +168,18 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 						for(int j=0; j<map.foods.size(); j++){
 							if(this.checkCollision(map.foods.get(j).getBounds(), xpos, ypos)){
 								if(map.foods.get(j).isVisible()){
-									p.eat();
-									map.foods.get(j).eaten();	
+									if( Math.abs(xpos - p.xPos) <= 1 || Math.abs(xpos - p.xPos) <= 1 ){
+										p.eat();
+									}
+									map.foods.get(j).eaten();
 								}
-								
 								break;
 							}
 						}
 					}
 				}
-
+				System.out.println(p.getFoodEaten());
+				
 				for(int i=0; i<map.foods.size(); i++){
 					if(!map.foods.get(i).isVisible()){
 						map.foods.get(i).awaitRespawn();
