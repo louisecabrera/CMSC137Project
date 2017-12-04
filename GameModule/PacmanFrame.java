@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.Font;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -29,6 +30,7 @@ public class PacmanFrame extends JFrame implements Constants{
 	String name, servername;
 
 	GamePanel game;
+	private Font font = new Font("Courier New", Font.PLAIN, 30);
 	
 	public PacmanFrame(int type, String name, String servername, String numPlayers) {
 		this.name = name;
@@ -45,6 +47,11 @@ public class PacmanFrame extends JFrame implements Constants{
 		eastPanel.setBackground(Color.YELLOW);
 		eastPanel.setLayout(new BorderLayout());
 		eastPanel.setPreferredSize(new Dimension(250, Constants.HEIGHT));
+
+		JLabel playerName = new JLabel(name);
+		playerName.setFont(font);
+		playerName.setHorizontalAlignment(JLabel.CENTER);
+		eastPanel.add(playerName, BorderLayout.NORTH);
 		
 		centerPanel.setPreferredSize(new Dimension(Constants.HEIGHT,Constants.HEIGHT));
 		centerPanel.setBackground(Color.BLACK);

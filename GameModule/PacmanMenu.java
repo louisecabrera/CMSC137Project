@@ -10,7 +10,7 @@ public class PacmanMenu extends JFrame implements Constants{
 	private ServerPanel serverPanel;
 	private ClientPanel clientPanel;
 	private MechanicsPanel mechanicsPanel;
-
+	
 	public PacmanMenu(){
 		setTitle("The Pacman City");
 		setLayout(new BorderLayout());
