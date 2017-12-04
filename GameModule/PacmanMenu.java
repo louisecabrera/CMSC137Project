@@ -188,8 +188,9 @@ public class PacmanMenu extends JFrame implements Constants{
 			public void mouseClicked(MouseEvent e){
 				final String name = (clientPanel.getName()).trim();
 				final String servername = (clientPanel.getServerName()).trim();
+				final String players = (clientPanel.getNumPlayers()).trim();
 
-				if(name==null || name.isEmpty() || servername==null || servername.isEmpty()){
+				if(name==null || name.isEmpty() || servername==null || servername.isEmpty() || players==null || players.isEmpty()){
 					// checks if textfield is empty
 				}
 				else{
@@ -199,7 +200,7 @@ public class PacmanMenu extends JFrame implements Constants{
 
 					// opens gamepanel
 					Thread game = new Thread(() -> {
-						PacmanFrame pacframe = new PacmanFrame(0, name, servername, "2");
+						PacmanFrame pacframe = new PacmanFrame(0, name, servername, players);
 					});
 					game.start();
 				}

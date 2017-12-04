@@ -13,7 +13,7 @@ public class ClientPanel extends JPanel implements Constants {
 	Image back1, back2, go1, go2;
 	JLabel back, go;
 
-	JTextField username, servername;
+	JTextField username, servername, players;
 
 	public ClientPanel(){
 		try{
@@ -34,6 +34,10 @@ public class ClientPanel extends JPanel implements Constants {
 		servername.setFont(font);
 		servername.setText("");
 
+		players = new JTextField(10);
+		players.setFont(font);
+		players.setText("");
+
 		JLabel uname = new JLabel("Name");
 		uname.setFont(font);
 		uname.setForeground(Color.WHITE);
@@ -41,6 +45,10 @@ public class ClientPanel extends JPanel implements Constants {
 		JLabel sname = new  JLabel("Server Name");
 		sname.setFont(font);
 		sname.setForeground(Color.WHITE);
+
+		JLabel numplayers = new JLabel("Number of Players");
+		numplayers.setFont(font);
+		numplayers.setForeground(Color.WHITE);
 
 		centerPanel.setLayout(new GridBagLayout());
 		centerPanel.setBackground(Color.BLACK);
@@ -59,11 +67,21 @@ public class ClientPanel extends JPanel implements Constants {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 1;
-		centerPanel.add(sname, c);
+		centerPanel.add(numplayers, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 1;
+		centerPanel.add(players, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 2;
+		centerPanel.add(sname, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 2;
 		centerPanel.add(servername, c);
 		// end of center panel
 
@@ -91,5 +109,9 @@ public class ClientPanel extends JPanel implements Constants {
 
 	public String getServerName(){
 		return servername.getText();
+	}
+
+	public String getNumPlayers(){
+		return players.getText();
 	}
 }
