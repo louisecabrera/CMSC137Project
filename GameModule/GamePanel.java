@@ -99,10 +99,12 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 		}
 		// fix pacman render here too
 		if(!start){
+			System.out.print("1");
 			g.setColor(Color.YELLOW); //random
-			g.fillOval(this.x, this.y, 30, 30);
+			g.fillOval(this.x*30, this.y*30, 30, 30);
 		}
 		else{
+			System.out.println("2");
 			for(int i=0; i<currentCount; i++){
 				g.setColor(Color.YELLOW); //random
 				int xpos = (int)positions[i].getX();
@@ -130,6 +132,7 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 			try{ socket.receive(packet); } catch(Exception e){ }
 
 			serverData = new String(buf);
+			//System.out.println(serverData.split(":").length);
 
 			// checks connection with server
 			if(!connected && serverData.startsWith("CONNECTED")){
@@ -141,11 +144,10 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 				send("CONNECT "+name);
 			}
 			else if(connected){
-				start = true;
+				//System.out.println("Connecteeeed");
 				// start of food operations
 				for(int i=0; i<map.foods.size(); i++){
 					if(p.checkCollision(map.foods.get(i).getBounds())){
-
 						if(map.foods.get(i).isVisible()){
 							p.eat();
 							map.foods.get(i).eaten();	
@@ -164,6 +166,8 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 
 				// updates board info if receives a player from serverData
 				if(serverData.startsWith("PLAYER")){
+					//System.out.println("Startttttt");
+					start = true;
 					String[] playersInfo = serverData.split(":");
 					currentCount = 0;
 					for(int i=0; i<playersInfo.length-1; i++){
