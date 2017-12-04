@@ -179,9 +179,9 @@ public class PacmanMenu extends JFrame implements Constants{
 
 					// opens gamepanel
 					Thread game = new Thread(() -> {
-						PacmanFrame pacframe = new PacmanFrame(0, name, servername,"0");
+						PacmanFrame pacframe = new PacmanFrame(0, name, servername, "2");
 					});
-					game.start();	
+					game.start();
 				}
 
 				// create new client for chat

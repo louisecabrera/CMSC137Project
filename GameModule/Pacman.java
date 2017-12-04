@@ -33,7 +33,6 @@ public class Pacman extends JPanel implements Painter, ActionListener, KeyListen
     private int foodEaten;
     private boolean alive;
     private boolean ghost;
-
     private Image pac;
 
     Map map = new Map();
