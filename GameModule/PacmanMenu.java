@@ -9,6 +9,7 @@ public class PacmanMenu extends JFrame implements Constants{
 	private MenuPanel menuPanel;
 	private ServerPanel serverPanel;
 	private ClientPanel clientPanel;
+	private MechanicsPanel mechanicsPanel;
 
 	public PacmanMenu(){
 		setTitle("The Pacman City");
@@ -21,6 +22,7 @@ public class PacmanMenu extends JFrame implements Constants{
 
 		serverPanel = new ServerPanel();
 		clientPanel = new ClientPanel();
+		mechanicsPanel = new MechanicsPanel();
 
 		/* Start of menu panel controls */
 		// create means player is server
@@ -63,6 +65,24 @@ public class PacmanMenu extends JFrame implements Constants{
 
 				clientPanel.setVisible(true);
 				add(clientPanel);
+			}
+			public void mousePressed(MouseEvent e){ }
+			public void mouseReleased(MouseEvent e){ }
+		});
+
+		(menuPanel.mechanics).addMouseListener(new MouseListener(){
+			public void mouseEntered(MouseEvent e){
+				(menuPanel.mechanics).setIcon(new ImageIcon(menuPanel.mech2));
+			}
+			public void mouseExited(MouseEvent e){
+				(menuPanel.mechanics).setIcon(new ImageIcon(menuPanel.mech1));
+			}
+			public void mouseClicked(MouseEvent e){
+				menuPanel.setVisible(false);
+				remove(menuPanel);
+
+				mechanicsPanel.setVisible(true);
+				add(mechanicsPanel);
 			}
 			public void mousePressed(MouseEvent e){ }
 			public void mouseReleased(MouseEvent e){ }
@@ -191,6 +211,24 @@ public class PacmanMenu extends JFrame implements Constants{
 			public void mouseReleased(MouseEvent e){ }	
 		});
 		/* End of client panel controls */
+
+		/* Start of mechanics panel controls */
+		(mechanicsPanel.back).addMouseListener(new MouseListener(){
+			public void mouseEntered(MouseEvent e){
+				(mechanicsPanel.back).setIcon(new ImageIcon(mechanicsPanel.back2));
+			}
+			public void mouseExited(MouseEvent e){
+				(mechanicsPanel.back).setIcon(new ImageIcon(mechanicsPanel.back1));
+			}
+			public void mouseClicked(MouseEvent e){
+				mechanicsPanel.setVisible(false);
+				menuPanel.setVisible(true);
+				add(menuPanel);
+			}
+			public void mousePressed(MouseEvent e){ }
+			public void mouseReleased(MouseEvent e){ }
+		});
+		/* End of mechanics panel controls */
 
 		pack();
 		setVisible(true);

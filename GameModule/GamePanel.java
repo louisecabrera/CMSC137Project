@@ -101,6 +101,7 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 			painter.paint(g2d, this, map.mapWidth*30,map.mapHeight*30);
 		}
 		// fix pacman render here too
+
 		if(!start){ //if not yet start, paints the pacman in its position
 			g.setColor(Color.YELLOW); //random
 			g.fillOval(this.x*30, this.y*30, 30, 30);
@@ -184,6 +185,8 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 						positions[i] = point;
 						currentCount++;
 
+						this.getGraphics().drawString(pname,x+3,y+20);
+						this.getGraphics().setColor(Color.YELLOW);
 						// FIX IMAGE RENDER of pacman here; based from circlewars idk
 						
 					}
