@@ -12,10 +12,10 @@ public class MenuPanel extends JPanel implements Constants{
 	private JPanel southPanel = new JPanel();
 	private JPanel centerPanel = new JPanel();
 
-	Image create1, create2, join1, join2, exit1, exit2;
+	Image create1, create2, join1, join2, exit1, exit2, mech1, mech2;
 
 	private JLabel logo = new JLabel(new ImageIcon(getClass().getResource("images/text/logo.png")));
-	JLabel create, join, exit;
+	JLabel create, join, exit, mechanics;
 
 	
 	public MenuPanel(){
@@ -26,6 +26,8 @@ public class MenuPanel extends JPanel implements Constants{
 			join2 = ImageIO.read(new File("images/text/join2.png"));
 			exit1 = ImageIO.read(new File("images/text/exit1.png"));
 			exit2 = ImageIO.read(new File("images/text/exit2.png"));
+			mech1 = ImageIO.read(new File("images/text/mechanics1.png"));
+			mech2 = ImageIO.read(new File("images/text/mechanics2.png"));
 		} catch(Exception e){ }
 
 		setLayout(new BorderLayout());
@@ -36,6 +38,7 @@ public class MenuPanel extends JPanel implements Constants{
 		northPanel.setBackground(Color.BLACK);
 
 		centerPanel.setBackground(Color.BLACK);
+		centerPanel.setPreferredSize(new Dimension(Constants.WIDTH, 200));
 		centerPanel.add(logo);
 
 		create = new JLabel(new ImageIcon(create1));
@@ -47,11 +50,15 @@ public class MenuPanel extends JPanel implements Constants{
 		exit = new JLabel(new ImageIcon(exit1));
 		exit.setHorizontalAlignment(JLabel.CENTER);
 
+		mechanics = new JLabel(new ImageIcon(mech1));
+		mechanics.setHorizontalAlignment(JLabel.CENTER);
+
 		southPanel.setBackground(Color.BLACK);
-		southPanel.setPreferredSize(new Dimension(Constants.WIDTH, 200));
-		southPanel.setLayout(new GridLayout(4,1,0,0));
+		// southPanel.setPreferredSize(new Dimension(Constants.WIDTH, 200));
+		southPanel.setLayout(new GridLayout(5,1,0,0));
 		southPanel.add(create);
 		southPanel.add(join);
+		southPanel.add(mechanics);
 		southPanel.add(exit);
 
 		add(northPanel, BorderLayout.NORTH);
