@@ -82,6 +82,9 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 				}
 			}
 		}
+
+		this.x = x;
+		this.y = y;
 		System.out.println((x*30) + " " + (y*30));
 		p = new Pacman(x*30,y*30,name,server);
 
@@ -98,17 +101,20 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 			painter.paint(g2d, this, map.mapWidth*30,map.mapHeight*30);
 		}
 		// fix pacman render here too
-		if(!start){
-			System.out.print("1");
+		if(!start){ //if not yet start, paints the pacman in its position
 			g.setColor(Color.YELLOW); //random
 			g.fillOval(this.x*30, this.y*30, 30, 30);
 		}
 		else{
-			System.out.println("2");
+			if(p.moved==false){ //if pacman is not yet moving then other player won't see it
+				g.setColor(Color.YELLOW); //random
+				g.fillOval(this.x*30, this.y*30, 30, 30);
+			}
 			for(int i=0; i<currentCount; i++){
 				g.setColor(Color.YELLOW); //random
 				int xpos = (int)positions[i].getX();
 				int ypos = (int)positions[i].getY();
+				if(xpos==0 || ypos==0) continue;
 				g.fillOval(xpos, ypos, 30, 30);
 			}
 		}
@@ -132,7 +138,6 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 			try{ socket.receive(packet); } catch(Exception e){ }
 
 			serverData = new String(buf);
-			//System.out.println(serverData.split(":").length);
 
 			// checks connection with server
 			if(!connected && serverData.startsWith("CONNECTED")){
@@ -144,13 +149,12 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 				send("CONNECT "+name);
 			}
 			else if(connected){
-				//System.out.println("Connecteeeed");
 				// start of food operations
 				for(int i=0; i<map.foods.size(); i++){
 					if(p.checkCollision(map.foods.get(i).getBounds())){
 						if(map.foods.get(i).isVisible()){
 							p.eat();
-							map.foods.get(i).eaten();	
+							map.foods.get(i).eaten();
 						}
 						
 						break;
@@ -166,7 +170,6 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 
 				// updates board info if receives a player from serverData
 				if(serverData.startsWith("PLAYER")){
-					//System.out.println("Startttttt");
 					start = true;
 					String[] playersInfo = serverData.split(":");
 					currentCount = 0;
@@ -176,9 +179,7 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 						String pname = playerInfo[1];
 						int x = Integer.parseInt(playerInfo[2]);
 						int y = Integer.parseInt(playerInfo[3]);
-
-						this.x = x;
-						this.y = y;
+						
 						Point point = new Point(x,y);
 						positions[i] = point;
 						currentCount++;

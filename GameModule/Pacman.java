@@ -53,12 +53,13 @@ public class Pacman extends JPanel implements Painter, ActionListener, KeyListen
     int bulletDirection;
     boolean newKeyPress = false;
     String name, server;
+    boolean moved;
 
     DatagramSocket socket = new DatagramSocket();
 
     public Pacman(int xPos, int yPos, String name, String server) throws Exception{
         this.name = name;
-        this.server =server;
+        this.server = server;
         this.hp = 5;
         this.foodEaten = 0;
         this.alive = true;
@@ -67,6 +68,7 @@ public class Pacman extends JPanel implements Painter, ActionListener, KeyListen
 
         this.xPos = xPos;
         this.yPos = yPos;
+        this.moved = false;
 
         this.direction = STOP;
         this.prevDirection = STOP;
@@ -117,7 +119,6 @@ public class Pacman extends JPanel implements Painter, ActionListener, KeyListen
     }
 
     public void actionPerformed(ActionEvent e){
-
     	//switch pacman from right to left/left to right portal
     	if(this.xPos == 0 && this.yPos == 360){//left to right portal
     			this.xPos = (map.mapWidth * 30)-30;
@@ -209,6 +210,7 @@ public class Pacman extends JPanel implements Painter, ActionListener, KeyListen
 
         // sends string to be read by other clients
         if(prevX!=xPos || prevY!=yPos){
+            this.moved = true;
             send("PLAYER "+name+" "+xPos+" "+yPos);
         }
     }
