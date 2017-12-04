@@ -183,6 +183,8 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 						positions[i] = point;
 						currentCount++;
 
+						this.getGraphics().drawString(pname,x+3,y+20);
+						this.getGraphics().setColor(Color.YELLOW);
 						// FIX IMAGE RENDER of pacman here; based from circlewars idk
 						
 					}
