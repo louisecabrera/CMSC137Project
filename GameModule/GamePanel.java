@@ -99,12 +99,12 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 		}
 		// fix pacman render here too
 		if(!start){
-			System.out.print("1");
+			// System.out.print("1");
 			g.setColor(Color.YELLOW); //random
 			g.fillOval(this.x*30, this.y*30, 30, 30);
 		}
 		else{
-			System.out.println("2");
+			// System.out.println("2");
 			for(int i=0; i<currentCount; i++){
 				g.setColor(Color.YELLOW); //random
 				int xpos = (int)positions[i].getX();
