@@ -86,7 +86,7 @@ public class Pacman extends JPanel implements Painter, ActionListener, KeyListen
     }
 
     public void paint(Graphics2D g, Object thePanel, int width, int height){
-        g.drawImage(pac, this.xPos, this.yPos, null);
+        // g.drawImage(pac, this.xPos, this.yPos, null);
         s.render(g);
     }
 

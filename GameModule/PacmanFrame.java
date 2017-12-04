@@ -66,8 +66,8 @@ public class PacmanFrame extends JFrame implements Constants{
 			});
 			client.start();
 
+			// starts UDP server
 			GameServer gameServer = new GameServer(this.numPlayers);
-
 			Thread gServer = new Thread(gameServer);
 			gServer.start();
 

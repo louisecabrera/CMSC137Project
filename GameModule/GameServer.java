@@ -49,6 +49,10 @@ public class GameServer implements Runnable, Constants{
 		}
 	}
 
+	public int getGameStage(){
+		return this.gameStage;
+	}
+
 	public void run(){
 		while(true){
 			byte[] buf = new byte[256];

@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
+import java.awt.image.BufferedImage;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
@@ -35,13 +36,14 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 	private JLabel wait = new JLabel(new ImageIcon(getClass().getResource("images/text/wait.png")));
 
 	int numPlayers;
-	int x=30, y=30, prevX, prevY, speed=1;
+	int x=0, y=0, prevX, prevY, speed=1;
 	String name;
 	String pname;
 	String server;
 	boolean connected = false;
 	DatagramSocket socket = new DatagramSocket();
 	String serverData;
+	
 
 	public GamePanel(String numPlayers, String server, String name) throws Exception{
 		this.name = name;
@@ -54,9 +56,31 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 		this.setPreferredSize(new Dimension(map.mapWidth*30,map.mapHeight*30));
 		layerPainters.add(map);
 
-		p = new Pacman(x,y,name,server);
+		try{
+            this.pac = ImageIO.read(new File("images/pmtile.png"));
+        } catch(Exception e){ }
 
-		layerPainters.add(p);
+
+        // Randomizes pacman position
+		Random random = new Random();
+		boolean clash=true;
+
+		while(clash){
+			clash = false;
+			x = random.nextInt((map.mapWidth)-1)+1;
+			y = random.nextInt((map.mapHeight)-1)+1;
+
+			// checks if pos is a barrier
+			for(Barrier b : barriers){
+				if(x*30==b.getX() && y*30==b.getY()){
+					clash = true;
+				}
+			}
+		}
+
+		p = new Pacman(x*30,y*30,name,server);
+
+		// layerPainters.add(p);
 
 		this.add(p);
 		this.setVisible(true);
@@ -69,6 +93,8 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 		for(Painter painter : layerPainters){
 			painter.paint(g2d, this, map.mapWidth*30,map.mapHeight*30);
 		}
+		// fix pacman render here too
+		
 	}
 
 	public void send(String msg){
@@ -82,28 +108,6 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 
 	public void run(){
 		while(true){
-			// // start of food operations
-			// for(int i=0; i<map.foods.size(); i++){
-			// 	if(p.checkCollision(map.foods.get(i).getBounds())){
-
-			// 		if(map.foods.get(i).isVisible()){
-			// 			p.eat();
-			// 			map.foods.get(i).eaten();	
-			// 		}
-					
-			// 		break;
-			// 	}
-			// }
-
-			// for(int i=0; i<map.foods.size(); i++){
-			// 	if(!map.foods.get(i).isVisible()){
-			// 		map.foods.get(i).awaitRespawn();
-			// 	}
-			// }
-			// // end of food operations
-
-			// this.repaint();
-			// try{ Thread.sleep(10); } catch(Exception e){ }
 
 			try{ Thread.sleep(1); } catch(Exception e){ }
 
@@ -113,6 +117,7 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 
 			serverData = new String(buf);
 
+			// checks connection with server
 			if(!connected && serverData.startsWith("CONNECTED")){
 				connected = true;
 				System.out.println("Connected.");
@@ -122,26 +127,27 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 				send("CONNECT "+name);
 			}
 			else if(connected){
+
 				// start of food operations
-			for(int i=0; i<map.foods.size(); i++){
-				if(p.checkCollision(map.foods.get(i).getBounds())){
+				for(int i=0; i<map.foods.size(); i++){
+					if(p.checkCollision(map.foods.get(i).getBounds())){
 
-					if(map.foods.get(i).isVisible()){
-						p.eat();
-						map.foods.get(i).eaten();	
+						if(map.foods.get(i).isVisible()){
+							p.eat();
+							map.foods.get(i).eaten();	
+						}
+						
+						break;
 					}
-					
-					break;
 				}
-			}
 
-			for(int i=0; i<map.foods.size(); i++){
-				if(!map.foods.get(i).isVisible()){
-					map.foods.get(i).awaitRespawn();
+				for(int i=0; i<map.foods.size(); i++){
+					if(!map.foods.get(i).isVisible()){
+						map.foods.get(i).awaitRespawn();
+					}
 				}
-			}
-			// end of food operations
-				
+				// end of food operations
+
 				// updates board info if receives a player from serverData
 				if(serverData.startsWith("PLAYER")){
 					String[] playersInfo = serverData.split(":");
@@ -153,8 +159,11 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 						int x = Integer.parseInt(playerInfo[2]);
 						int y = Integer.parseInt(playerInfo[3]);
 
-						p.setXPos(x);
-						p.setYPos(y);
+						this.x = x;
+						this.y = y;
+
+						// FIX IMAGE RENDER of pacman here; based from circlewars idk
+						
 					}
 
 					this.repaint();					
