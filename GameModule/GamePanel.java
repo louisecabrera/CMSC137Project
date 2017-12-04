@@ -14,6 +14,7 @@ import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.image.BufferedImage;
 import java.awt.Point;
+import java.awt.Rectangle;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
@@ -130,6 +131,14 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 		} catch(Exception e){ }
 	}
 
+	public Rectangle getBounds(int xPos, int yPos){
+        return new Rectangle(xPos, yPos, 30, 30);
+    }
+
+    public boolean checkCollision(Rectangle entity, int x, int y){
+        return this.getBounds(x,y).intersects(entity);
+    }
+
 	public void run(){
 		while(true){
 			try{ Thread.sleep(1); } catch(Exception e){ }
@@ -151,14 +160,21 @@ public class GamePanel extends JPanel implements Runnable, Constants{
 			}
 			else if(connected){
 				// start of food operations
-				for(int i=0; i<map.foods.size(); i++){
-					if(p.checkCollision(map.foods.get(i).getBounds())){
-						if(map.foods.get(i).isVisible()){
-							p.eat();
-							map.foods.get(i).eaten();
+				for(int i=0; i<numPlayers; i++){//checks collision of all pacmans with the food pellets
+					int xpos = 0, ypos = 0;
+					if(positions[i] != null){
+						xpos = (int)positions[i].getX();
+						ypos = (int)positions[i].getY();
+						for(int j=0; j<map.foods.size(); j++){
+							if(this.checkCollision(map.foods.get(j).getBounds(), xpos, ypos)){
+								if(map.foods.get(j).isVisible()){
+									p.eat();
+									map.foods.get(j).eaten();	
+								}
+								
+								break;
+							}
 						}
-						
-						break;
 					}
 				}
 
